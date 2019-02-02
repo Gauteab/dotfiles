@@ -9,7 +9,7 @@ endif
 " Plugins
 call plug#begin('~/.vim/plugged')
 	Plug 'sheerun/vim-polyglot'
-	Plug 'dracula/vim', { 'as': 'dracula' }
+	"Plug 'dracula/vim', { 'as': 'dracula' }
 	Plug 'dkasak/gruvbox'
 	Plug 'w0rp/ale'
 	Plug 'udalov/kotlin-vim'
@@ -17,11 +17,13 @@ call plug#begin('~/.vim/plugged')
 	Plug 'vim-syntastic/syntastic'
 	Plug 'SirVer/ultisnips'
 	Plug 'honza/vim-snippets'
+	" Deoplete and dependencies
 	Plug 'Shougo/deoplete.nvim'
 	Plug 'roxma/nvim-yarp'
 	Plug 'roxma/vim-hug-neovim-rpc'
 call plug#end()
 
+" Enable Deoplete
 let g:deoplete#enable_at_startup = 1
 
 " Fix Kitty Background Bug
@@ -38,16 +40,17 @@ set wildmenu
 set hidden
 set incsearch
 set backspace=indent,eol,start
-
-" by default, the indent is 4 spaces. 
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
-set nowrap
+set noswapfile " Disbale auto backup
 
 " Theme
 colo gruvbox
 set background=dark
+
+" Default indent set to 4
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set nowrap
 
 " Toggle hybrid line numbers with \l
 map <leader>l :setlocal number! relativenumber!<cr>
@@ -64,14 +67,16 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-h> <C-w>h
 map <C-l> <C-w>l
+" Split Windows
+map <leader>\| :vs<cr>
+map <leader> - :sp<cr>
+" Exit terminal mode with ESC
+tnoremap <ESC> <C-\><C-n>
 
 " == ALE ==
-let g:ale_enabled = 1
+let g:ale_enabled = 0
 nnoremap <leader>o :ALEToggle<CR>
 
 " fzf for vim
 set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
 
-
-set noswapfile
-tnoremap <ESC> <C-\><C-n>
