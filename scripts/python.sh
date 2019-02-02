@@ -3,6 +3,7 @@ alias python3='python3.7'
 alias python='python3'
 alias py='python'
 alias p3='py'
+alias pip='pip3'
 
 # added by Anaconda3 5.3.1 installer
 # >>> conda init >>>
