@@ -1,3 +1,4 @@
+" ln -sf $DOTFILES/vimrc $HOME/.vimrc
 
 " Setup Plug
 if empty(glob('~/.vim/autoload/plug.vim'))
