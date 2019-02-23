@@ -80,3 +80,5 @@ nnoremap <leader>o :ALEToggle<CR>
 " fzf for vim
 set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
 
+" Build P0 and run qemu
+map <leader>q :wa<cr> :! make test<cr>
