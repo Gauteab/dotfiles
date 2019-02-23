@@ -18,6 +18,7 @@ alias get='sudo apt-get'
 alias apt='sudo apt'
 alias open='xdg-open'
 alias version='lsb_release -a'
+alias ifi='ssh gauteab@login.ifi.uio.no'
 
 ## -- LS --
 alias ls='ls -p --color'
