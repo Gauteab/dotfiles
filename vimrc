@@ -22,6 +22,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'Shougo/deoplete.nvim'
 	Plug 'roxma/nvim-yarp'
 	Plug 'roxma/vim-hug-neovim-rpc'
+	Plug 'tpope/vim-commentary'
 call plug#end()
 
 " Enable Deoplete
@@ -42,15 +43,19 @@ set hidden
 set incsearch
 set backspace=indent,eol,start
 set noswapfile " Disbale auto backup
+set scrolloff=4 " Always 4 lines around cursor
+set mouse=a
 
 " Theme
 colo gruvbox
 set background=dark
 
 " Default indent set to 4
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
+set tabstop=4 " To match the sample file
+set softtabstop=2
+set shiftwidth=2
+set expandtab " Use tabs, not spaces
+
 set nowrap
 
 " Toggle hybrid line numbers with \l
@@ -63,6 +68,8 @@ map <leader>s :w<cr> :so $MYVIMRC<cr>
 map <leader>p :w<cr> :! python %<cr>
 " Return to previous buffer
 map <leader>b :bp<cr>
+" Comment out paragraph
+map <leader>g gcip
 " Windowing
 map <C-j> <C-w>j
 map <C-k> <C-w>k
@@ -80,6 +87,3 @@ nnoremap <leader>o :ALEToggle<CR>
 
 " fzf for vim
 set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
-
-" Build P0 and run qemu
-map <leader>q :wa<cr> :! make test<cr>

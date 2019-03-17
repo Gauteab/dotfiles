@@ -15,7 +15,11 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-source ~/.bashrc
+source $HOME/ubuntu_env/bashrc
+
+alias pdf='libreoffice --headless --invisible --convert-to pdf'
+alias mk='make clean && make'
+alias qemu='qemu-system-i386 -drive file=image,format=raw -serial file:serial.out'
 
 export VIMRUNTIME='/usr/share/vim/vim80'
 export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
