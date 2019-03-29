@@ -15,7 +15,7 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/ubuntu_env/bashrc
+source $HOME/dotfiles/bashrc
 
 export VIMRUNTIME='/usr/share/vim/vim80'
 export PATH=$HOME/.cargo/bin:$PATH

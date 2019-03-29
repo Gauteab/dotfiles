@@ -3,7 +3,7 @@
 setxkbmap -option caps:escape
 
 # == Environment Configuration ==
-export DOTFILES="$HOME/ubuntu_env"
+export DOTFILES="$HOME/dotfiles"
 export SCRIPTS="/$DOTFILES/scripts"
 export VIM="~/.vim"
 
