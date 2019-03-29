@@ -15,7 +15,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'w0rp/ale'
 	Plug 'udalov/kotlin-vim'
 	Plug 'rust-lang/rust.vim'
-	Plug 'vim-syntastic/syntastic'
+	"Plug 'vim-syntastic/syntastic'
 	Plug 'SirVer/ultisnips'
 	Plug 'honza/vim-snippets'
 	" Deoplete and dependencies
@@ -85,5 +85,3 @@ tnoremap <ESC> <C-\><C-n>
 let g:ale_enabled = 0
 nnoremap <leader>o :ALEToggle<CR>
 
-" fzf for vim
-set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
