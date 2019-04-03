@@ -37,6 +37,21 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
+" vim -b : edit binary using xxd-format!
+augroup Binary
+  au!
+  au BufReadPre   *.class let &bin=1
+  au BufReadPost  *.class %!xxd
+  au BufReadPost  *.class set ft=xxd
+  au BufWritePre  *.class %!xxd -r
+  au BufWritePost *.class %!xxd
+  au BufWritePost *.class set nomod | endif
+augroup END
+
+" hex
+map <leader>w :wa<cr> :! python hex.py %<cr>
+set autoread
+
 " Custom stuff
 set wildmenu
 set hidden
@@ -80,6 +95,9 @@ map <leader>\| :vs<cr>
 map <leader> - :sp<cr>
 " Exit terminal mode with ESC
 tnoremap <ESC> <C-\><C-n>
+
+" Previous buffer
+map <C-e> :e#<cr>
 
 " == ALE ==
 let g:ale_enabled = 0

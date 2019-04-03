@@ -17,8 +17,13 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 source $HOME/dotfiles/bashrc
 
+# Vi Mode
+bindkey -v
+
 export VIMRUNTIME='/usr/share/vim/vim80'
 export PATH=$HOME/.cargo/bin:$PATH
+export JAVA_HOME='/usr/lib/jvm/jdk-u8191'
+export PATH=$JAVA_HOME/bin:$PATH
 
 # SDKMAN
 export SDKMAN_DIR="/home/gaute/.sdkman"

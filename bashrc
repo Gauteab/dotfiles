@@ -21,6 +21,7 @@ alias open='xdg-open'
 alias version='lsb_release -a'
 
 alias ifi='ssh gauteab@login.ifi.uio.no'
+alias e='echo'
 
 # == Tools ==
 alias pdf='libreoffice --headless --invisible --convert-to pdf'
