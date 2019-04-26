@@ -12,10 +12,20 @@ plugins=(
   zsh-syntax-highlighting
   zsh-autosuggestions
   colored-man-pages
+  extract
+  web-search
 )
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/dotfiles/bashrc
+
+# make CapsLock behave like Ctrl:
+setxkbmap -option ctrl:nocaps
+# make short-pressed Ctrl behave like Escape:
+xcape -e 'Control_L=Escape'
+
+# NASM helper
+function nsm { nasm -felf64 $1.asm; gcc -no-pie $1.o; ./a.out; rm -rf $1.o a.out }
 
 # Vi Mode
 bindkey -v
@@ -24,7 +34,3 @@ export VIMRUNTIME='/usr/share/vim/vim80'
 export PATH=$HOME/.cargo/bin:$PATH
 export JAVA_HOME='/usr/lib/jvm/jdk-u8191'
 export PATH=$JAVA_HOME/bin:$PATH
-
-# SDKMAN
-export SDKMAN_DIR="/home/gaute/.sdkman"
-[[ -s "/home/gaute/.sdkman/bin/sdkman-init.sh" ]] && source "/home/gaute/.sdkman/bin/sdkman-init.sh"
