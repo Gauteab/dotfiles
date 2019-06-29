@@ -19,14 +19,14 @@ call plug#begin('~/.vim/plugged')
 	Plug 'SirVer/ultisnips'
 	Plug 'honza/vim-snippets'
 	" Deoplete and dependencies
-	Plug 'Shougo/deoplete.nvim'
-	Plug 'roxma/nvim-yarp'
-	Plug 'roxma/vim-hug-neovim-rpc'
+	"Plug 'Shougo/deoplete.nvim'
+	"Plug 'roxma/nvim-yarp'
+	"Plug 'roxma/vim-hug-neovim-rpc'
 	Plug 'tpope/vim-commentary'
 call plug#end()
 
 " Enable Deoplete
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
 
 " Fix Kitty Background Bug
 let &t_ut=''
@@ -67,8 +67,8 @@ set background=dark
 
 " Default indent set to 4
 set tabstop=4 " To match the sample file
-set softtabstop=2
-set shiftwidth=2
+set softtabstop=4
+set shiftwidth=4
 set expandtab " Use tabs, not spaces
 
 set nowrap

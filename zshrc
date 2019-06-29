@@ -26,11 +26,12 @@ xcape -e 'Control_L=Escape'
 
 # NASM helper
 function nsm { nasm -felf64 $1.asm; gcc -no-pie $1.o; ./a.out; rm -rf $1.o a.out }
+alias calc='java -jar ~/work/Calcula/out/jar/Calc.jar'
 
 # Vi Mode
 bindkey -v
 
 export VIMRUNTIME='/usr/share/vim/vim80'
 export PATH=$HOME/.cargo/bin:$PATH
-export JAVA_HOME='/usr/lib/jvm/jdk-u8191'
+export JAVA_HOME='/usr/lib/jvm/java-8-openjdk-amd64'
 export PATH=$JAVA_HOME/bin:$PATH

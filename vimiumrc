@@ -1,0 +1,22 @@
+# Insert your preferred key mappings here.
+
+# Custom key mappings
+map n scrollDown
+map N previousTab
+
+map e scrollUp
+map E nextTab
+
+map i scrollRight
+map I goForward
+
+map l enterInsertMode
+map k performFind
+map K performBackwardsFind
+
+map t LinkHints.activateMode
+map T LinkHints.activateModeToOpenInNewTab
+
+# Characters used for link hints
+# arstdneiho
+# arstdhneiolkpv

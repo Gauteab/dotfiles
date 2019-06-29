@@ -20,7 +20,7 @@ alias apt='sudo apt'
 alias open='xdg-open'
 alias version='lsb_release -a'
 
-alias ifi='ssh gauteab@login.ifi.uio.no'
+alias ifi='ssh -X gauteab@login.ifi.uio.no'
 alias e='echo'
 
 # == Tools ==
