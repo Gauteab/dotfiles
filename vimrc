@@ -1,5 +1,3 @@
-" ln -sf $DOTFILES/vimrc $HOME/.vimrc
-
 " Setup Plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -9,48 +7,33 @@ endif
 
 " Plugins
 call plug#begin('~/.vim/plugged')
+    Plug '/usr/local/opt/fzf'
+    Plug 'lervag/vimtex'
 	Plug 'sheerun/vim-polyglot'
-	"Plug 'dracula/vim', { 'as': 'dracula' }
 	Plug 'dkasak/gruvbox'
 	Plug 'w0rp/ale'
 	Plug 'udalov/kotlin-vim'
 	Plug 'rust-lang/rust.vim'
-	"Plug 'vim-syntastic/syntastic'
 	Plug 'SirVer/ultisnips'
 	Plug 'honza/vim-snippets'
 	" Deoplete and dependencies
-	"Plug 'Shougo/deoplete.nvim'
-	"Plug 'roxma/nvim-yarp'
-	"Plug 'roxma/vim-hug-neovim-rpc'
+	Plug 'Shougo/deoplete.nvim'
+	Plug 'roxma/nvim-yarp'
+	Plug 'roxma/vim-hug-neovim-rpc'
 	Plug 'tpope/vim-commentary'
 call plug#end()
 
 " Enable Deoplete
-"let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 
 " Fix Kitty Background Bug
 let &t_ut=''
 
 " Snippets
-let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
-
-" vim -b : edit binary using xxd-format!
-augroup Binary
-  au!
-  au BufReadPre   *.class let &bin=1
-  au BufReadPost  *.class %!xxd
-  au BufReadPost  *.class set ft=xxd
-  au BufWritePre  *.class %!xxd -r
-  au BufWritePost *.class %!xxd
-  au BufWritePost *.class set nomod | endif
-augroup END
-
-" hex
-map <leader>w :wa<cr> :! python hex.py %<cr>
-set autoread
 
 " Custom stuff
 set wildmenu
@@ -60,6 +43,8 @@ set backspace=indent,eol,start
 set noswapfile " Disbale auto backup
 set scrolloff=4 " Always 4 lines around cursor
 set mouse=a
+set clipboard=unnamed
+set inccommand=nosplit
 
 " Theme
 colo gruvbox
@@ -74,7 +59,8 @@ set expandtab " Use tabs, not spaces
 set nowrap
 
 " Toggle hybrid line numbers with \l
-map <leader>l :setlocal number! relativenumber!<cr>
+set number! relativenumber!
+map <leader>l :set number! relativenumber!<cr>
 " Open vimrc with \e
 map <leader>e :e  $MYVIMRC<cr>
 "Source vimrc with \s
@@ -103,3 +89,11 @@ map <C-e> :e#<cr>
 let g:ale_enabled = 0
 nnoremap <leader>o :ALEToggle<CR>
 
+autocmd FileType python map <F9> :w<CR>:!python %<CR>
+autocmd FileType haskell map <F9> :w<CR>:!runhaskell %<CR>
+
+augroup vimrc-incsearch-highlight
+  autocmd!
+  autocmd CmdlineEnter /,\? :set hlsearch
+  autocmd CmdlineLeave /,\? :set nohlsearch
+augroup END

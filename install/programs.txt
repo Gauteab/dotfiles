@@ -1,5 +1,0 @@
-wget
-git
-zsh
-curl
-vim
