@@ -60,25 +60,20 @@ set nowrap
 
 " Toggle hybrid line numbers with \l
 set number! relativenumber!
-map <leader>l :set number! relativenumber!<cr>
+map <space>l :set number! relativenumber!<cr>
 " Open vimrc with \e
-map <leader>e :e  $MYVIMRC<cr>
+map <space>e :e  $MYVIMRC<cr>
 "Source vimrc with \s
-map <leader>s :w<cr> :so $MYVIMRC<cr>
-" Run currently open python file with \p
-map <leader>p :w<cr> :! python %<cr>
+map <space>s :w<cr> :so $MYVIMRC<cr>
 " Return to previous buffer
-map <leader>b :bp<cr>
+map <space>b :bp<cr>
 " Comment out paragraph
-map <leader>g gcip
+map <space>g gcip
 " Windowing
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-h> <C-w>h
 map <C-l> <C-w>l
-" Split Windows
-map <leader>\| :vs<cr>
-map <leader> - :sp<cr>
 " Exit terminal mode with ESC
 tnoremap <ESC> <C-\><C-n>
 
@@ -87,7 +82,7 @@ map <C-e> :e#<cr>
 
 " == ALE ==
 let g:ale_enabled = 0
-nnoremap <leader>o :ALEToggle<CR>
+nnoremap <space>o :ALEToggle<CR>
 
 autocmd FileType python map <F9> :w<CR>:!python %<CR>
 autocmd FileType haskell map <F9> :w<CR>:!runhaskell %<CR>
