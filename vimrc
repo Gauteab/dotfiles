@@ -16,6 +16,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'rust-lang/rust.vim'
 	Plug 'SirVer/ultisnips'
 	Plug 'honza/vim-snippets'
+    Plug 'neovimhaskell/haskell-vim'
 	" Deoplete and dependencies
 	Plug 'Shougo/deoplete.nvim'
 	Plug 'roxma/nvim-yarp'
@@ -30,7 +31,7 @@ let g:deoplete#enable_at_startup = 1
 let &t_ut=''
 
 " Snippets
-"let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"

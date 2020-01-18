@@ -14,6 +14,7 @@ plugins=(
   colored-man-pages
   extract
   web-search
+  fzf-z
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -26,3 +27,7 @@ alias vi="nvim"
 alias vim="nvim"
 alias x="vim \$(fzf)"
 alias gitit="git add --all && git commit && git push"
+alias tu="cd ~/.talon/user/"
+alias zshrc='vim ~/dotfiles/zshrc && source ~/.zshrc'
+alias vimrc='vim ~/.vimrc'
+
