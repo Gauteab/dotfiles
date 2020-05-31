@@ -7,6 +7,9 @@ endif
 
 " Plugins
 call plug#begin('~/.vim/plugged')
+    Plug 'junegunn/vim-easy-align'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+    Plug 'christoomey/vim-run-interactive'
     Plug 'tpope/vim-surround'
     Plug '/usr/local/opt/fzf'
     Plug 'junegunn/fzf', { 'do': './install --bin' }
@@ -26,8 +29,10 @@ call plug#begin('~/.vim/plugged')
 	Plug 'roxma/nvim-yarp'
 	Plug 'roxma/vim-hug-neovim-rpc'
 	Plug 'tpope/vim-commentary'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
+
+let g:mkdp_auto_close = 0
 
 " Enable Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -35,8 +40,11 @@ let g:deoplete#enable_at_startup = 1
 " Fix Kitty Background Bug
 let &t_ut=''
 
+nmap ga <Plug>(EasyAlign)
+
 " map <space>f <Plug>(easymotion-bd-f)
 map <enter> <Plug>(easymotion-overwin-f)
+let g:EasyMotion_smartcase = 1
 
 " Snippets
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -45,6 +53,8 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
 " Custom stuff
+set ignorecase
+set smartcase
 set wildmenu
 set hidden
 set incsearch
@@ -98,7 +108,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " == ALE ==
 let g:ale_enabled = 0
 " let g:ale_linters = { 'haskell': ['hlint'] }
-let g:ale_fixers = { 'haskell': ['brittany'], 'c': ['clang-format']}
+let g:ale_fixers = { 'haskell': ['brittany'], 'c': ['clang-format'], 'elm': ['elm-format']}
 let g:ale_fix_on_save = 1
 let g:ale_c_clangformat_options = '-style=WebKit'
 map <space>at :ALEToggle<CR>
@@ -117,7 +127,8 @@ augroup END
 autocmd FileType python map <F9> :w<CR>:!python %<CR>
 autocmd FileType haskell map <F9> :w<CR>:!runhaskell %<CR>
 autocmd FileType teraterm map <F9> :w<CR>:!ttl %<CR>
-autocmd FileType markdown map <F9> :w<CR>:silent !pandoc -t revealjs -s -o slides.html % -V theme=solarized -V revealjs-url=https://revealjs.com<CR>
+autocmd FileType markdown map <F9> :w<CR>:!pandoc % -o %:r.pdf<CR>
+autocmd FileType bash map <F9> :w<CR>:!./%<CR>
 
 augroup vimrc-incsearch-highlight
   autocmd!
@@ -132,3 +143,20 @@ map <space>rg :Rg<CR>
 " Preview in :Files
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+" Set the title of the Terminal to the currently open file
+function! SetTerminalTitle()
+    let titleString = expand('%:t')
+    if len(titleString) > 0
+        let &titlestring = expand('%:t')
+        " this is the format iTerm2 expects when setting the window title
+        let args = "\033];".&titlestring."\007"
+        let cmd = 'silent !echo -e "'.args.'"'
+        execute cmd
+        redraw!
+    endif
+endfunction
+
+autocmd BufEnter * call SetTerminalTitle()
+
+command! -nargs=+ Calc :!python -c "from math import *; print(<args>)"
