@@ -7,44 +7,46 @@ endif
 
 " Plugins
 call plug#begin('~/.vim/plugged')
+    " Editing
+    Plug 'jiangmiao/auto-pairs'
     Plug 'junegunn/vim-easy-align'
-    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-    Plug 'christoomey/vim-run-interactive'
-    Plug 'tpope/vim-surround'
-    Plug '/usr/local/opt/fzf'
-    Plug 'junegunn/fzf', { 'do': './install --bin' }
-    Plug 'junegunn/fzf.vim'
-    Plug 'easymotion/vim-easymotion'
-    Plug 'lervag/vimtex'
-	Plug 'sheerun/vim-polyglot'
-	Plug 'dkasak/gruvbox'
-	Plug 'w0rp/ale'
-	Plug 'udalov/kotlin-vim'
-	Plug 'rust-lang/rust.vim'
-	Plug 'SirVer/ultisnips'
-	Plug 'honza/vim-snippets'
-    " Plug 'neovimhaskell/haskell-vim'
-	" Deoplete and dependencies
-	Plug 'Shougo/deoplete.nvim'
-	Plug 'roxma/nvim-yarp'
-	Plug 'roxma/vim-hug-neovim-rpc'
 	Plug 'tpope/vim-commentary'
-    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'tpope/vim-surround'
+
+    " Navigation
+    Plug 'easymotion/vim-easymotion'
+    Plug 'preservim/nerdtree'
+    Plug 'junegunn/fzf.vim'
+
+    " IDE
+    Plug 'neoclide/coc.nvim', {'branch': 'release'} " LSP
+	Plug 'w0rp/ale'
+	Plug 'SirVer/ultisnips' " Snippet engine
+	Plug 'honza/vim-snippets' " Snippet collection
+	Plug 'sheerun/vim-polyglot' " Syntax Highlighting for many languages
+
+    " Misc
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+	Plug 'dkasak/gruvbox' " theme
+    Plug 'chrisbra/Colorizer' " highlight color codes
+    Plug 'christoomey/vim-run-interactive'
 call plug#end()
 
+" Set leader to space
+let mapleader = " "
+
+" Markdown Preview
 let g:mkdp_auto_close = 0
 
-" Enable Deoplete
-let g:deoplete#enable_at_startup = 1
-
-" Fix Kitty Background Bug
-let &t_ut=''
-
+" EasyAlign
 nmap ga <Plug>(EasyAlign)
 
-" map <space>f <Plug>(easymotion-bd-f)
-map <enter> <Plug>(easymotion-overwin-f)
+" Easy Motion
+nmap <C-M> <Plug>(easymotion-overwin-f)
 let g:EasyMotion_smartcase = 1
+
+" Load a template
+nnoremap <leader>tl :r ~/templates/
 
 " Snippets
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -53,6 +55,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
 " Custom stuff
+syntax on
+filetype on
+filetype plugin indent on
 set ignorecase
 set smartcase
 set wildmenu
@@ -60,35 +65,30 @@ set hidden
 set incsearch
 set backspace=indent,eol,start
 set noswapfile " Disbale auto backup
-set scrolloff=4 " Always 4 lines around cursor
-set mouse=a
-set clipboard=unnamed
+set scrolloff=8 " Scroll offset
+set mouse=a " Make the mouse work
+set clipboard=unnamed " vim and os use same clipboard
 set inccommand=nosplit
-
 " Theme
 colo gruvbox
 set background=dark
-
 " Default indent set to 4
-set tabstop=4 " To match the sample file
+set tabstop=4 
 set softtabstop=4
 set shiftwidth=4
 set expandtab
-
 set nowrap
-
-" Toggle hybrid line numbers with \l
 set number relativenumber
-map <space>n :set number! relativenumber!<cr>
-" Open vimrc with \e
-map <space>e :e  ~/dotfiles/vimrc<cr>
-"Source vimrc with \s
-map <space>so :w<cr> :so $MYVIMRC<cr>
+
+map <space>ee :e  ~/dotfiles/vimrc<cr>
+map <space>ev :vs  ~/dotfiles/vimrc<cr>
+map <space>es :sp  ~/dotfiles/vimrc<cr>
+map <space>so :w<cr> :source $MYVIMRC<cr> 
 " Return to previous buffer
 map <space>b :e#<cr>
+" Windowing
 map <space>vs :vs<cr>
 map <space>sp :sp<cr>
-" Windowing
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-h> <C-w>h
@@ -96,40 +96,69 @@ map <C-l> <C-w>l
 " Exit terminal mode with ESC
 tnoremap <ESC> <C-\><C-n>
 
+
 " == COC ==
-" GoTo code navigation.
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+nmap <leader>rn <Plug>(coc-rename)
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>co :CocList --number-select outline<CR>
+nmap <leader>cs :CocList --number-select -I symbols<CR>
+nmap <leader>cl :CocList --number-select <CR>
+nmap <leader>ch :call CocAction('doHover')<CR>
+" nmap <leader>cf :call CocAction('format')<CR>
+nmap <leader>cf :CocFix<CR>
+nmap <silent> <leader>ct <Plug>(coc-type-definition)
+nmap <silent> <leader>ci  <Plug>(coc-implementation)
+nmap <silent> <leader>cr <Plug>(coc-references)
+nmap <silent> <C-b> <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
 
 " == ALE ==
 let g:ale_enabled = 0
 " let g:ale_linters = { 'haskell': ['hlint'] }
-let g:ale_fixers = { 'haskell': ['brittany'], 'c': ['clang-format'], 'elm': ['elm-format']}
+let g:ale_fixers = { 'purescript': ['purty'], 'haskell': ['hindent'], 'c': ['clang-format'], 'elm': ['elm-format'], 'python': ['autopep8'], 'java': ['google_java_format']}
+let g:ale_java_google_java_format_options = '-i'
 let g:ale_fix_on_save = 1
-let g:ale_c_clangformat_options = '-style=WebKit'
+let g:ale_c_clangformat_options = '--style=WebKit'
+
 map <space>at :ALEToggle<CR>
 map <space>af :ALEFix hindent<CR>
 map <space>ap :ALEPrevious<CR>
 map <space>an :ALENextWrap<CR>
 
+" Make title readable by talon
+function! SetTitle()
+    let &titlestring ='VIM MODE:%{mode()} - (%f) %t'
+    set title
+endfunction
+
 augroup configgroup
     autocmd!
+    autocmd BufEnter * call SetTitle()
     autocmd BufEnter *.pl setlocal filetype=prolog
-    autocmd BufEnter *.hs setlocal tabstop=2
-    autocmd BufEnter *.hs setlocal shiftwidth=2
-    autocmd BufEnter *.hs setlocal softtabstop=2
+    autocmd BufEnter *.talon setlocal filetype=conf
+    autocmd BufEnter *.talon setlocal commentstring=#\ %s
+    autocmd BufEnter *.purs setlocal commentstring=--\ %s
+    autocmd BufEnter *.purs,*.hs,*.ts,*.tsx setlocal tabstop=2
+    autocmd BufEnter *.purs,*.hs,*.ts,*.ts* setlocal shiftwidth=2
+    autocmd BufEnter *.purs,*.hs,*.ts,*.ts* setlocal softtabstop=2
+    autocmd BufEnter *.elm nnoremap <buffer> <leader>ta 0ywkpA: 
+    autocmd BufEnter *.hs,*.purs nnoremap <buffer> <leader>ta 0ywkpA:: 
 augroup END
 
-autocmd FileType python map <F9> :w<CR>:!python %<CR>
-autocmd FileType haskell map <F9> :w<CR>:!runhaskell %<CR>
-autocmd FileType teraterm map <F9> :w<CR>:!ttl %<CR>
-autocmd FileType markdown map <F9> :w<CR>:!pandoc % -o %:r.pdf<CR>
-autocmd FileType bash map <F9> :w<CR>:!./%<CR>
+augroup runable
+    autocmd FileType python map <F9> :w<CR>:!python3 %<CR>
+    autocmd FileType haskell map <F9> :w<CR>:!runhaskell %<CR>
+    autocmd FileType purescript map <F9> :w<CR>:!spago run<CR>
+    autocmd FileType tex map <F9> :w<CR>:!pdflatex %<CR>
+    autocmd FileType teraterm map <F9> :w<CR>:!ttl %<CR>
+    autocmd FileType markdown map <F9> :w<CR>:!pandoc % -o %:r.pdf<CR>
+    autocmd FileType bash map <F9> :w<CR>:!./%<CR>
+    autocmd FileType typescript map <F9> :w<CR>:!ts-node %<CR>
+    autocmd FileType javascript map <F9> :w<CR>:!node %<CR>
+augroup END
 
+" Make searching nicer
 augroup vimrc-incsearch-highlight
   autocmd!
   autocmd CmdlineEnter /,\? :set hlsearch
@@ -139,24 +168,28 @@ augroup END
 " === FZF ===
 map <space>g :Files<CR>
 map <space>rg :Rg<CR>
-
 " Preview in :Files
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
-" Set the title of the Terminal to the currently open file
-function! SetTerminalTitle()
-    let titleString = expand('%:t')
-    if len(titleString) > 0
-        let &titlestring = expand('%:t')
-        " this is the format iTerm2 expects when setting the window title
-        let args = "\033];".&titlestring."\007"
-        let cmd = 'silent !echo -e "'.args.'"'
-        execute cmd
-        redraw!
-    endif
-endfunction
+" augroup talon_coc
+"     autocmd!
+"     autocmd BufEnter,BufWritePre *.ts,*.tsx,*.elm silent call SaveDocumentSymbols()
+" augroup END
 
-autocmd BufEnter * call SetTerminalTitle()
+" function SaveWorkspaceSymbols()
+"     let symbols = CocAction('getWorkspaceSymbols')
+"     let symbols = json_encode(symbols)
+"     let file = "/Users/gauteab/.talon/user/lsp/workspaceSymbols.json"
+"     call writefile([symbols], file)
+" endfunction
 
-command! -nargs=+ Calc :!python -c "from math import *; print(<args>)"
+" function SaveDocumentSymbols()
+"     echo "saving document symbols"
+"     let symbols = CocAction('documentSymbols')
+"     let symbols = json_encode(symbols)
+"     let file = "/Users/gauteab/.talon/user/lsp/documentSymbols.json"
+"     call writefile([symbols], file)
+" endfunction
+
+

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function elm-run {
-    echo -e "import Zip exposing (..)\n\"--- OK ---\"\n$1" | elm repl
+    echo -e "import Main exposing (..)\n\"--- OK ---\"\n$1" | elm repl
 }
 
 function elm-deamon {

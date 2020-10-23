@@ -1,4 +1,5 @@
 export TERM="xterm-256color"
+export EDITOR="nvim"
 
 # == ZSH ==
 export ZSH="$HOME/.oh-my-zsh"
@@ -32,13 +33,15 @@ alias vimrc='vim ~/dotfiles/vimrc'
 alias l='clear; exa -la --group-directories-first'
 alias ls='exa'
 alias tree='exa -l -T'
-alias skim='open -a "Skim" thesis.pdf'
-
+alias skim='open -a "Skim"'
 alias timel='python3 ~/uio/Timelisteskript/timeliste.py Gaute Berge IN2000 16-11-1996'
 alias pdfviewer='open -a "Google Chrome" -n --args "chrome-extension://gfbliohnnapiefjpjlpjnehglfpaknnc/pages/pdf_viewer.html"'
+alias java-format='java -jar ~/opt/google-java-format-1.9-all-deps.jar'
 
+
+# Run in stack project to fix an issue with the language server
 function hie-fix {
-    rm -rf .stack-work
+    rm -rf .stack-work;
     stack build
 }
 
@@ -75,12 +78,15 @@ set_title() {
     echo -e "\033];$@\007"
 }
 
+# watch files an update ~/.names 
+# tw src
 tw() {
-    echo "file type: $1"
-    echo "watching $2"
-    fswatch -0 --event Updated $2 | while read -d "" event 
+    echo "watching $1"
+    fswatch -0 --event Updated $1 | while read -d "" event 
     do
         echo "changed: $event"
-        python ./extract_functions.py $1 $event
+        python ~/dotfiles/extract_functions.py $event
     done
 }
+
+
