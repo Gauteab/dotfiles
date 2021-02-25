@@ -41,7 +41,8 @@ alias java-format='java -jar ~/opt/google-java-format-1.9-all-deps.jar'
 
 # Run in stack project to fix an issue with the language server
 function hie-fix {
-    rm -rf .stack-work;
+    gen-hie > hie.yaml
+    rm -rf .stack-work
     stack build
 }
 
