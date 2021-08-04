@@ -26,7 +26,7 @@ bindkey -v
 
 # Aliases
 alias vi="nvim"
-alias vim="nvim"
+# alias vim="nvim"
 alias gitit="git add --all && git commit && git push"
 alias zshrc='vim ~/dotfiles/zshrc && source ~/.zshrc'
 alias vimrc='vim ~/dotfiles/vimrc'
@@ -37,6 +37,9 @@ alias skim='open -a "Skim"'
 alias timel='python3 ~/uio/Timelisteskript/timeliste.py Gaute Berge IN2000 16-11-1996'
 alias pdfviewer='open -a "Google Chrome" -n --args "chrome-extension://gfbliohnnapiefjpjlpjnehglfpaknnc/pages/pdf_viewer.html"'
 alias java-format='java -jar ~/opt/google-java-format-1.9-all-deps.jar'
+alias talon-repl='~/.talon/.venv/bin/repl'
+alias talon-log='tail -f ~/.talon/talon.log'
+alias talon-pip='~/.talon/bin/pip'
 
 
 # Run in stack project to fix an issue with the language server
@@ -90,4 +93,13 @@ tw() {
     done
 }
 
+# move the last $1 files to directory $2
+function mvx { ls|tail -$1|while read -r e; do mv $e $2;  done; }
 
+# move the last $1 files to new directory called $2
+# e.g: slp-save 5 rich
+# to capture that game 5 set
+function slp-save { 
+    mkdir $2;
+    ls *.slp|tail -$1|while read -r e; do mv $e $2;  done; 
+}

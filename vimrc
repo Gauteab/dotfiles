@@ -7,11 +7,14 @@ endif
 
 " Plugins
 call plug#begin('~/.vim/plugged')
+    " Plug 'Gauteab/talon-fluent-nvim'
+
     " Editing
     Plug 'jiangmiao/auto-pairs'
     Plug 'junegunn/vim-easy-align'
 	Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-surround'
+    Plug 'unblevable/quick-scope'
 
     " Navigation
     Plug 'easymotion/vim-easymotion'
@@ -33,10 +36,15 @@ call plug#begin('~/.vim/plugged')
 	Plug 'dkasak/gruvbox' " theme
     Plug 'chrisbra/Colorizer' " highlight color codes
     Plug 'christoomey/vim-run-interactive'
+    Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 call plug#end()
 
 " Set leader to space
 let mapleader = " "
+
+nnoremap <C-f> z=
+nnoremap <C-S> ]s
+nnoremap <C-s> [s
 
 " Markdown Preview
 let g:mkdp_auto_close = 0
@@ -47,9 +55,6 @@ nmap ga <Plug>(EasyAlign)
 " Easy Motion
 nmap <C-M> <Plug>(easymotion-overwin-f)
 let g:EasyMotion_smartcase = 1
-
-" Load a template
-nnoremap <leader>tl :r ~/templates/
 
 " Snippets
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -147,29 +152,20 @@ map <space>af :ALEFix<CR>
 map <space>ap :ALEPrevious<CR>
 map <space>an :ALENextWrap<CR>
 
-" Make title readable by talon
-function! SetTitle()
-    let &titlestring ='VIM MODE:%{mode()} RPC:%{v:servername} | %F'
-    " let &titlestring ='VIM MODE:%{mode()} RPC:%{v:servername} - (%f) %t'
-    " let &titlestring ='VIM MODE:%{mode()} - (%f) %t'
-    set title
-endfunction
-
 augroup configgroup
     autocmd!
     " Highlight the symbol and its references when holding the cursor.
     autocmd CursorHold * silent call CocActionAsync('highlight')
     " autocmd CursorHold * silent call CocActionAsync('doHover')
-    autocmd BufEnter * call SetTitle()
     autocmd BufEnter *.pl setlocal filetype=prolog
     autocmd BufEnter *.talon setlocal filetype=conf
     autocmd BufEnter *.tex setlocal filetype=tex
     autocmd BufEnter *.talon setlocal commentstring=#\ %s
     autocmd BufEnter *.purs setlocal commentstring=--\ %s
     autocmd BufEnter *.bib setlocal commentstring=%\ %s
-    autocmd BufEnter *.purs,*.hs,*.ts,*.tsx setlocal tabstop=2
-    autocmd BufEnter *.purs,*.hs,*.ts,*.ts* setlocal shiftwidth=2
-    autocmd BufEnter *.purs,*.hs,*.ts,*.ts* setlocal softtabstop=2
+    autocmd BufEnter *.purs,*.hs,*.ts,*.tsx,*.js* setlocal tabstop=2
+    autocmd BufEnter *.purs,*.hs,*.ts,*.ts*,*.js* setlocal shiftwidth=2
+    autocmd BufEnter *.purs,*.hs,*.ts,*.ts*,*.js* setlocal softtabstop=2
     autocmd BufEnter *.elm nnoremap <buffer> <leader>ta 0ywkpA: 
     autocmd BufEnter *.hs,*.purs nnoremap <buffer> <leader>ta 0ywkpA:: 
     " autocmd BufWritePost *.hs silent call Fourmolu()
@@ -183,8 +179,9 @@ augroup runable
     autocmd FileType tex map <F9> :w<CR>:!pdflatex %<CR>
     autocmd FileType teraterm map <F9> :w<CR>:!ttl %<CR>
     autocmd FileType markdown map <F9> :w<CR>:!pandoc % -o %:r.pdf<CR>
-    autocmd FileType bash map <F9> :w<CR>:!./%<CR>
+    autocmd FileType bash,sh map <F9> :w<CR>:!./%<CR>
     autocmd FileType typescript map <F9> :w<CR>:!ts-node %<CR>
+    autocmd FileType typescript map <F10> :w<CR>:!tsc -p src<CR>
     autocmd FileType javascript map <F9> :w<CR>:!node %<CR>
 augroup END
 
@@ -198,40 +195,10 @@ augroup END
 " === FZF ===
 map <space>g :Files<CR>
 map <space>rg :Rg<CR>
-" map <space><space> :Commands<CR>
-" Preview in :Files
-" command! -bang -nargs=? -complete=dir Files
-"   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
-" augroup talon_coc
-"     autocmd!
-"     autocmd BufEnter,BufWritePre *.ts,*.tsx,*.elm silent call SaveDocumentSymbols()
-" augroup END
+" === TALON ===
+" source ~/.talon/user/talon-tree-sitter-service/talon.vimrc
 
-augroup talon_coc
-    autocmd!
-    autocmd BufEnter,BufWritePost *.elm silent call TalonUpdateSymbols()
-augroup END
+" source ~/.talon/user/lsp/talon_lsp.vim
 
-function SaveWorkspaceSymbols()
-    let symbols = CocAction('getWorkspaceSymbols')
-    let symbols = json_encode(symbols)
-    let file = "/Users/gauteab/uio/master/thesis/workspaceSymbols.json"
-    " let file = "/Users/gauteab/.talon/user/lsp/workspaceSymbols.json"
-    call writefile([symbols], file)
-endfunction
-
-function SaveDocumentSymbols()
-    echo "saving document symbols"
-    let symbols = CocAction('documentSymbols')
-    let symbols = json_encode(symbols)
-    let file = "/Users/gauteab/uio/master/thesis/documentSymbols.json"
-    " let file = "/Users/gauteab/.talon/user/lsp/documentSymbols.json"
-    call writefile([symbols], file)
-endfunction
-
-function TalonUpdateSymbols()
-    execute "!curl 'localhost:8080/update-symbols?file=%:p'"
-endfunction
-
-
+nnoremap <leader>n :w<CR>:UpdateRemotePlugins<CR>:q<CR>
